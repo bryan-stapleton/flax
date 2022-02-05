@@ -1,13 +1,14 @@
 <template>
   <b-navbar type="dark">
     <b-navbar-brand id='brand' href="https://github.com/gljusty" target="_blank">_Flax</b-navbar-brand>
-    <b-navbar-nav>
-      <b-nav-item-dropdown :text="this.u" right>
-        <b-dropdown-item href="#">Login</b-dropdown-item>
-        <b-dropdown-item href="#">Account</b-dropdown-item>
-        <b-dropdown-item href="#">Settings</b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-navbar-nav>
+    <div id='dropdown-wrapper'>
+      <b-navbar-nav>
+        <b-nav-item-dropdown :text="this.user" right>
+          <b-dropdown-item href="#">Account</b-dropdown-item>
+          <b-dropdown-item href="#">Settings</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+    </div>
   </b-navbar>
 </template>
 
@@ -17,13 +18,10 @@ export default {
   components: {},
   props: {
     user: String,
-    password: String,
     query: String
   },
   data () {
-    return {
-      u: 'Username'
-    }
+    return {}
   }
 }
 </script>
@@ -32,5 +30,8 @@ export default {
 #brand {
   margin-left: 20px;
 }
-
+#dropdown-wrapper {
+  margin-right: 40px;
+  justify-content: right;
+}
 </style>
