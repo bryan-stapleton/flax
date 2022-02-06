@@ -52,6 +52,7 @@ export default {
   max-height: 160px;
   background-color: #0c0c0c;
   color: lightgray;
+  animation: created 2s ease-in;
 }
 .tweet-grid {
   margin: auto;
@@ -72,5 +73,10 @@ export default {
 .profile-link:visited, ::after {
   text-decoration: none;
   color: grey;
+}
+
+@keyframes created {
+  0% {scale: 0}
+  100% {scale: 1.0}
 }
 </style>
