@@ -1,5 +1,5 @@
 <template>
-  <div class='tweet-grid'>
+  <transition-group tag='div' name='list' class='tweet-grid'>
     <div class="tweet-card" :id="tweet.id" tabindex="0" v-for="tweet in this.tweets" :key="tweet.id" v-on:dblclick="selected">
       <div class="profile-link-wrapper">
         <b-link class="profile-link" target="_blank" tabindex="-1" :href="tweet.link">
@@ -14,7 +14,7 @@
         <span> {{ tweet.tweet }} </span>
       </div>
     </div>
-  </div>
+  </transition-group>
 </template>
 
 <script>
@@ -76,7 +76,6 @@ export default {
 }
 
 @keyframes created {
-  0% {scale: 0}
-  100% {scale: 1.0}
+  
 }
 </style>

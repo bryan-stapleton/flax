@@ -1,4 +1,4 @@
-import twint
+import twint, re
 
 def TwintConfig(**kwargs):
     c = twint.Config()
@@ -15,3 +15,22 @@ def TwintConfig(**kwargs):
     c.Limit = 102                        #recommended to stay at this number for aesthetics, or below 1000 for speed; required.
     #c.Profile_full = True               #includes shadowbanned accounts & tweets. warning: slow; optional.
     return c
+
+def RemoveDuplicates(tweets):
+    seen = set()
+    cleaned = []
+    for tweet in tweets:
+        if tweet.id not in seen:
+            cleaned.append(tweet)
+            seen.add(tweet.id)
+    return cleaned
+
+def SerializeTweets(tweets):
+    jt = []
+    for tweet in tweets:
+        jt.append(vars(tweet))
+    return jt
+
+def removeURL(text):
+    #dont change this nonsense
+    return re.sub(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', " ", text)

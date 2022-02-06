@@ -2,10 +2,33 @@
   <b-navbar type="dark">
     <b-navbar-brand id='brand' href="https://github.com/gljusty" target="_blank">_Flax</b-navbar-brand>
     <div id='dropdown-wrapper'>
-      <b-nav-item-dropdown :text="this.user" right>
-        <b-dropdown-item href="#">Account</b-dropdown-item>
-        <b-dropdown-item href="#">Settings</b-dropdown-item>
-      </b-nav-item-dropdown>
+      <div>
+        <b-dropdown id="dropdown-form" text="Dropdown with form" ref="dropdown" variant="primary" class="m-2" right>
+          <b-dropdown-form>
+            <b-form-group label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
+              <b-form-input
+                id="dropdown-form-email"
+                size="sm"
+                placeholder="email@example.com"
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group label="Password" label-for="dropdown-form-password">
+              <b-form-input
+                id="dropdown-form-password"
+                type="password"
+                size="sm"
+                placeholder="Password"
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-checkbox class="mb-3">Remember me</b-form-checkbox>
+            <b-button variant="primary" size="sm" @click="onClick">Sign In</b-button>
+          </b-dropdown-form>
+          <b-dropdown-divider></b-dropdown-divider>
+          <b-dropdown-item-button>New around here? Sign up</b-dropdown-item-button>
+          <b-dropdown-item-button>Forgot Password?</b-dropdown-item-button>
+        </b-dropdown>
+      </div>
     </div>
   </b-navbar>
 </template>
@@ -14,6 +37,11 @@
 export default {
   name: 'NavBar',
   components: {},
+  methods: {
+    onClick() {
+      console.log('clicked')
+    }
+  },
   props: {
     user: String,
     query: String

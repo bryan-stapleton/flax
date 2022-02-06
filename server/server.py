@@ -1,5 +1,5 @@
 #local imports
-from config import TwintConfig
+from helpers import TwintConfig, RemoveDuplicates, SerializeTweets
 from analyzer import AnalyzeTweetSentiment
 
 #other imports
@@ -20,23 +20,8 @@ api = Api(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-def RemoveDuplicates(tweets):
-    seen = set()
-    cleaned = []
-    for tweet in tweets:
-        if tweet.id not in seen:
-            cleaned.append(tweet)
-            seen.add(tweet.id)
-    return cleaned
-
-def ReturnTweetsJson(tweets):
-    jt = []
-    for tweet in tweets:
-        jt.append(vars(tweet))
-    return jt
-
 ## ROUTES ##
-#TODO: Landing page for data visualize + GUI to interact with api directly. Currently handled by swagger auto generated docs. Docs need updating.
+#TODO: Landing page for data visualizer + GUI to interact with api directly. Currently handled by swagger auto generated docs. Docs need updating.
 @app.route('/')
 def landing():
     return
@@ -55,7 +40,7 @@ class AdvancedSearch(Resource):
             retry_counter += 1
             t = RemoveDuplicates(t)
         AnalyzeTweetSentiment(t)
-        j = ReturnTweetsJson(t)
+        j = SerializeTweets(t)
         return j
 
 @api.route('/search/<search_term>')
@@ -71,7 +56,7 @@ class Search(Resource):
             retry_counter += 1
             t = RemoveDuplicates(t)
         AnalyzeTweetSentiment(t)
-        j = ReturnTweetsJson(t)
+        j = SerializeTweets(t)
         return j  
 
 #TODO: fix location-based search route
