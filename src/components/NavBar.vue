@@ -2,12 +2,10 @@
   <b-navbar type="dark">
     <b-navbar-brand id='brand' href="https://github.com/gljusty" target="_blank">_Flax</b-navbar-brand>
     <div id='dropdown-wrapper'>
-      <b-navbar-nav>
-        <b-nav-item-dropdown :text="this.user" right>
-          <b-dropdown-item href="#">Account</b-dropdown-item>
-          <b-dropdown-item href="#">Settings</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
+      <b-nav-item-dropdown :text="this.user" right>
+        <b-dropdown-item href="#">Account</b-dropdown-item>
+        <b-dropdown-item href="#">Settings</b-dropdown-item>
+      </b-nav-item-dropdown>
     </div>
   </b-navbar>
 </template>
@@ -31,7 +29,9 @@ export default {
   margin-left: 20px;
 }
 #dropdown-wrapper {
+  margin-left: auto;
   margin-right: 40px;
-  justify-content: right;
+  text-align: right;
+  justify-content: end;
 }
 </style>
