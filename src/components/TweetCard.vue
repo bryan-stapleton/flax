@@ -1,5 +1,14 @@
 <template>
-  <transition-group tag='div' name='list' class='tweet-grid'>
+  <transition-group 
+  name='staggered-fade'
+  appear
+  tag='div' 
+  class='tweet-grid'
+  v-bind:css='false'
+  v-on:before-enter="beforeEnter"
+  v-on:enter='enter'
+  v-on:leave='leave'
+  >
     <div class="tweet-card" :id="tweet.id" tabindex="0" v-for="tweet in this.tweets" :key="tweet.id" v-on:dblclick="selected">
       <div class="profile-link-wrapper">
         <b-link class="profile-link" target="_blank" tabindex="-1" :href="tweet.link">
@@ -18,6 +27,8 @@
 </template>
 
 <script>
+import Velocity from 'velocity-animate'
+
 export default {
     name: 'TweetCard',
     props: {
@@ -27,6 +38,29 @@ export default {
       selected: function(event) {
         let n = event.currentTarget 
         this.$emit('tweet-selected', n)
+      },
+      beforeEnter: function(el) {
+        el.style.opacity = 0
+      },
+      enter: function(el, done) {
+        let delay = el.dataset.index * 150
+        setTimeout(function() {
+          Velocity(
+            el,
+            { opacity: 1 },
+            { complete: done }
+          )
+        }, delay)
+      },
+      leave: function (el, done) {
+        let delay = el.dataset.index * 150
+        setTimeout(function () {
+          Velocity(
+            el,
+            { opacity: 0, height: 0 },
+            { complete: done }
+          )
+        }, delay)
       }
     },
     data() {
@@ -75,7 +109,4 @@ export default {
   color: grey;
 }
 
-@keyframes created {
-  
-}
 </style>
