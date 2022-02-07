@@ -3,7 +3,7 @@
     <b-navbar-brand id='brand' href="https://github.com/gljusty" target="_blank">_Flax</b-navbar-brand>
     <div id='dropdown-wrapper'>
       <div>
-        <b-dropdown id="dropdown-form" text="Dropdown with form" ref="dropdown" variant="primary" class="m-2" right>
+        <b-dropdown id="dropdown-form" text="Dropdown with form" ref="dropdown" variant="info" class="m-2" right>
           <b-dropdown-form>
             <b-form-group label="Email" label-for="dropdown-form-email" @submit.stop.prevent>
               <b-form-input
@@ -38,8 +38,8 @@ export default {
   name: 'NavBar',
   components: {},
   methods: {
-    onClick() {
-      console.log('clicked')
+    onClick(el) {
+      el.style.backgroundColor = 'coral'
     }
   },
   props: {

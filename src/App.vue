@@ -6,13 +6,23 @@
       </div>
       <portal-target name="destination"></portal-target>
       <div class='ui-wrapper'>
-        <b-form-input class="inputfield" v-model.lazy="search_term" placeholder="ex: @BarackObama"></b-form-input>
-        <b-btn @click='searchDifferentiator(search_term)'>t</b-btn>
+        <b-form-input class="m-0 inputfield" v-model.lazy="search_term" placeholder="ex: @BarackObama"></b-form-input>
+        <b-button-toolbar size="sm">
+          <b-button class="ml-1 sm-0 search-button" variant="info" @click="searchDifferentiator(search_term)"> Search </b-button>
+          <b-dropdown
+          class="sm-1 ml-1"
+          variant="info"
+          right
+          >
+            <b-dropdown-item @click="downloadtoFile(tweets)">Download</b-dropdown-item>
+            <b-dropdown-item @click="downloadSelected()">Selected</b-dropdown-item>
+          </b-dropdown>
+        </b-button-toolbar>
       </div>
       <div class="tweet-wrapper">
         <TweetCard :tweets="this.tweets" v-on:tweet-selected="updateSelected" />
       </div>
-      <!-- TODO: finish graphing section and related features. Place inside conditionally rendered modal; implement correlation & wordcloud -->
+      <!-- TODO: redo graphing section and related features. Place inside conditionally rendered modal; implement correlation & wordcloud -->
     </div>
 
     <portal to="destination">
@@ -148,9 +158,10 @@ body {
 }
 
 .inputfield {
-  display: grid;
-  margin: 10px;
-  max-width: 250px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 0;
+  max-width: 300px;
 }
 
 .logo-anim {
@@ -158,7 +169,8 @@ body {
 }
 
 .selected {
-  border: white solid 2px;
+  border: white solid 1px;
+  box-shadow: whitesmoke 1px 1px;
 }
 
 .logo-wrapper {
@@ -173,7 +185,7 @@ body {
 
 .ui-wrapper {
   display: flex;
-  place-content: center;
+  justify-content: center;
 }
 
 @keyframes loading {

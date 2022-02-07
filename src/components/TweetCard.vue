@@ -1,6 +1,5 @@
 <template>
   <transition-group 
-  name='staggered-fade'
   appear
   tag='div' 
   class='tweet-grid'
@@ -15,12 +14,13 @@
           @{{ tweet.username }}
         </b-link>
         <a class='score-wrapper'>
-          <b-badge variant="">{{ tweet.scores['compound'] }}</b-badge>
+          <b-badge variant='success' v-if="tweet.scores['compound'] > 0">{{tweet.scores['compound']}}</b-badge>
+          <b-badge variant='danger' v-else-if="tweet.scores['compound'] < 0">{{tweet.scores['compound']}}</b-badge>
+          <b-badge variant='' v-else>{{tweet.scores['compound']}}</b-badge>
         </a>
-        <span><br/><br/></span>
       </div>
       <div class='text-wrapper'>
-        <span> {{ tweet.tweet }} </span>
+        <span>{{tweet.tweet}}</span>
       </div>
     </div>
   </transition-group>
@@ -32,7 +32,7 @@ import Velocity from 'velocity-animate'
 export default {
     name: 'TweetCard',
     props: {
-      tweets: Array
+      tweets: Array,
     },
     methods: {
       selected: function(event) {
@@ -43,7 +43,7 @@ export default {
         el.style.opacity = 0
       },
       enter: function(el, done) {
-        let delay = el.dataset.index * 150
+        let delay = Math.random() ** 2 * 750
         setTimeout(function() {
           Velocity(
             el,
@@ -53,16 +53,17 @@ export default {
         }, delay)
       },
       leave: function (el, done) {
-        let delay = el.dataset.index * 150
+        let delay = Math.random() ** 3 * 3000
         setTimeout(function () {
           Velocity(
             el,
-            { opacity: 0, height: 0 },
+            { opacity: 0 },
             { complete: done }
           )
         }, delay)
       }
     },
+    computed: {},
     data() {
       return {}
     },
@@ -96,6 +97,9 @@ export default {
 }
 .profile-link-wrapper {
   float: right;
+}
+.text-wrapper {
+  margin: 20px 5px 2px 5px;
 }
 .score-wrapper {
   float: right;
