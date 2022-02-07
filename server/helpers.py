@@ -12,7 +12,7 @@ def TwintConfig(**kwargs):
         c.Search = kwargs['search_term']
     c.Store_object = True                #creates store data object; required.
     c.Hide_output = True                 #prevents spamming the terminal; required.
-    c.Limit = 102                        #recommended to stay at this number for aesthetics, or below 1000 for speed; required.
+    c.Limit = 102                        #recommended to stay at 102 for aesthetics, or below 1000 for speed; required.
     #c.Profile_full = True               #includes shadowbanned accounts & tweets. warning: slow; optional.
     return c
 

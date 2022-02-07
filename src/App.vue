@@ -4,7 +4,9 @@
       <div class="navbar-wrapper">
         <NavBar />
       </div>
-      <portal-target name="destination"></portal-target>
+      <div class='logo-wrapper'>
+        <img id='logo' alt="3 circles logo" src="./assets/logo.svg">
+      </div>
       <div class='ui-wrapper'>
         <b-form-input class="m-0 inputfield" v-model.lazy="search_term" placeholder="ex: @BarackObama"></b-form-input>
         <b-button-toolbar size="sm">
@@ -176,6 +178,14 @@ body {
 .logo-wrapper {
   display: flex;
   place-content: center;
+  position: sticky;
+  top: 0px;
+  z-index: -1;
+}
+
+.navbar-wrapper {
+  position: sticky;
+  top: 0px;
 }
 
 .tweet-wrapper {

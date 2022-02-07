@@ -14,7 +14,7 @@ def extract_from_tweets(file, attribute):
                     raise e
 
 def validate(file):
-    if file.lower().endswith('.json') & os.path.isfile(file):
+    if os.path.isfile(file):
         return True
     elif os.path.exists(file):
         print("Could not validate filetype. Please submit a .json file.") 
@@ -23,4 +23,4 @@ def validate(file):
     return False
 
 
-extract_from_tweets('test_data.json', 'timestamp')
+extract_from_tweets('data', 'tweet')
