@@ -23,6 +23,9 @@
           <b-button variant="primary" size="sm" @click="onClick">Sign In</b-button>
         </b-dropdown-form>
         <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item-button @click="emitDownload()">Download</b-dropdown-item-button>
+        <b-dropdown-item-button @click="emitSelected()">Selected</b-dropdown-item-button>
+        <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item-button>New around here? Sign up</b-dropdown-item-button>
         <b-dropdown-item-button>Forgot Password?</b-dropdown-item-button>
       </b-dropdown>
@@ -35,13 +38,23 @@ export default {
   name: 'NavBar',
   components: {},
   methods: {
-    onClick() {
+    onClick: function() {
       console.log('clicked')
+    },
+    emitDownload: function(event) {
+      console.log('emitting download event')
+      this.$emit('download-event', event)
+    },
+    
+    emitSelected: function(event) {
+      console.log('emitting selected event')
+      this.$emit('selected-event', event)
     }
+
   },
   props: {
     user: String,
-    query: String
+    tweets: Array
   },
   data () {
     return {}

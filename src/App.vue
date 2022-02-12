@@ -2,7 +2,7 @@
   <div id="app">
     <div class="app-wrapper">
       <div class="navbar-wrapper">
-        <NavBar />
+        <NavBar :tweets="this.tweets" v-on:download-event="downloadtoFile(tweets)" v-on:selected-event="downloadSelected()" />
       </div>
       <div class='logo-wrapper'>
         <img id='logo' alt="3 circles logo" src="./assets/logo.svg">
@@ -11,14 +11,6 @@
         <b-form-input class="m-0 inputfield" v-model.lazy="search_term" placeholder="ex: @BarackObama"></b-form-input>
         <b-button-toolbar size="sm">
           <b-button class="ml-1 sm-0 search-button" variant="info" @click="searchDifferentiator(search_term)"> Search </b-button>
-          <b-dropdown
-          class="sm-1 ml-1"
-          variant="info"
-          right
-          >
-            <b-dropdown-item @click="downloadtoFile(tweets)">Download</b-dropdown-item>
-            <b-dropdown-item @click="downloadSelected()">Selected</b-dropdown-item>
-          </b-dropdown>
         </b-button-toolbar>
       </div>
       <div class="tweet-wrapper">

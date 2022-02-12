@@ -1,7 +1,12 @@
 import os, json
 
+
 def list_attributes(file):
-    pass
+    if validate(file):
+        with open(os.path.abspath(file), encoding='utf8') as f:
+            data = json.load(f)
+            for n in data[0].keys():
+                print(n, '', type(n), '', data[0].get(n))
 
 def extract_from_tweets(file, attribute):
     if validate(file):
@@ -23,4 +28,5 @@ def validate(file):
     return False
 
 
-extract_from_tweets('data', 'tweet')
+#extract_from_tweets('data', 'tweet')
+list_attributes('data')
