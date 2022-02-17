@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
 db = SQLAlchemy()
+ma = Marshmallow()
 
 #The attributes that are commented out can be added back in by uncommenting them below in the class definition and the init function. 
 #The attributes will need to be set in the AddToDatabase function as well. AddToDatabase can be found in db.py.
@@ -17,7 +19,7 @@ class Tweet(db.Model):
     username = db.Column(db.String(64))
     tweet = db.Column(db.String(280))
     lang = db.Column(db.String(64))
-    scores = db.Column(db.Integer)
+    score = db.Column(db.Integer)
     #id_str = db.Column(db.String(64))
     #conversation_id = db.Column(db.String(64))
     #datestamp = db.Column(db.String(64))
@@ -82,3 +84,12 @@ class Tweet(db.Model):
     
     def __repr__(self):
         return f'[{self.id}: {self.tweet} -@{self.username} posted:{self.datetime}]'
+
+class TweetSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Tweet
+    id = ma.auto_field()
+    tweet = ma.auto_field()
+    username = ma.auto_field()
+    datetime = ma.auto_field()
+

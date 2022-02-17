@@ -11,6 +11,7 @@
         <b-form-input class="m-0 inputfield" v-model.lazy="search_term" placeholder="ex: @BarackObama"></b-form-input>
         <b-button-toolbar size="sm">
           <b-button class="ml-1 sm-0 search-button" variant="info" @click="searchDifferentiator(search_term)"> Search </b-button>
+          <b-button class="ml-1 sm-0 button" variant="primary" @click="queryDatabase()"> Query DB </b-button>
         </b-button-toolbar>
       </div>
       <div class="tweet-wrapper">
@@ -109,6 +110,10 @@ export default {
       axios.get("https://finnhub.io/api/v1/quote?symbol=AAPL&token=c7fcj52ad3if3fodts7g")  // currently not in use; placeholder 
       .then(response => {console.log(response.data)
       })
+    },
+    queryDatabase: function() {
+      axios.get("https://localhost:5000/private/query")
+      .then(response => { console.log(response.data) })
     }
   },
   watch: {
