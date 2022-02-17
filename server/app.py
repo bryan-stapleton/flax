@@ -36,8 +36,9 @@ def AddToDatabase(tweets):
 
 def QueryTweets():
     schema = TweetSchema()
-    #for n in db.session.query(Tweet).filter_by(username='joebiden').order_by(Tweet.datetime):
-    return schema.dump(Tweet.all())
+    #for n in db.session.query(Tweet).filter_by(username='barackobama').order_by(Tweet.datetime):
+    for n in db.session.query(Tweet).all():
+        print(schema.dump(n))
 
 ## ROUTES ##
 #TODO: Landing page for data visualizer + GUI to interact with api directly. Currently handled by swagger auto generated docs. Docs need updating.
@@ -52,8 +53,7 @@ class DatabaseQuery(Resource):
         return jsonify(res)
     
     def get(self):
-        t = QueryTweets()
-        return t
+        return 'test'
 
 @api.route('/advanced/<username>/')
 @api.route('/advanced/<username>/<search_term>')
@@ -62,6 +62,7 @@ class AdvancedSearch(Resource):
         c = TwintConfig(username=username, search_term=search_term)
         res = PerformSearch(c)
         AddToDatabase(res)
+        QueryTweets()
         return jsonify(res)
 
 @api.route('/search/<search_term>')
