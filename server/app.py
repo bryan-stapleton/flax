@@ -1,6 +1,6 @@
 #local imports
 from helpers import TwintConfig, PerformSearch
-from database.models import db, Tweet, TweetSchema
+from database.db import db, Tweet, TweetSchema
 
 #external imports
 from flask import Flask, jsonify
@@ -36,9 +36,14 @@ def AddToDatabase(tweets):
 
 def QueryTweets():
     schema = TweetSchema()
+    tw = []
     #for n in db.session.query(Tweet).filter_by(username='barackobama').order_by(Tweet.datetime):
-    for n in db.session.query(Tweet).all():
-        print(schema.dump(n))
+    for n in db.session.query(Tweet).filter(Tweet.score >= 0.5).order_by(Tweet.score):
+        t = schema.dump(n)
+        print(t)
+        tw.append(t)
+    print(tw)
+    return tw
 
 ## ROUTES ##
 #TODO: Landing page for data visualizer + GUI to interact with api directly. Currently handled by swagger auto generated docs. Docs need updating.
@@ -46,14 +51,15 @@ def QueryTweets():
 def landing():
     return
 
-@app.route('/private/query/')
+@api.route('/db/query/')
 class DatabaseQuery(Resource):
-    def post(self):
-        res = "placeholder"
-        return jsonify(res)
+    #def post(self):
+    #    res = "placeholder"
+    #    return jsonify(res)
     
     def get(self):
-        return 'test'
+        res = QueryTweets()
+        return jsonify(res) 
 
 @api.route('/advanced/<username>/')
 @api.route('/advanced/<username>/<search_term>')
@@ -76,10 +82,10 @@ class Search(Resource):
 ## APP ##
 if __name__ == "__main__":
     db.init_app(app)
-    #app.app_context().push() #This is only needed on initial setup.
-    #with app.app_context(): #Builds database tables and connects app to db.
-    #    close_all_sessions() #Will need to uncomment the close_all_sessions import above.
-    #    db.drop_all()
-    #    db.create_all()
+#    app.app_context().push() #This is only needed on initial setup.
+#    with app.app_context():  #Builds database tables and connects app to db.
+#        close_all_sessions() #Will need to uncomment the close_all_sessions import above.
+#        db.drop_all()        # 
+#        db.create_all()      # end of initial setup block. Comment all this out after first run.
     app.run(debug=True, threaded=True)
     
