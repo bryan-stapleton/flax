@@ -7,7 +7,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_restx import Api, Resource
 from flask_marshmallow import Marshmallow
-#from sqlalchemy.orm import close_all_sessions #uncomment this import for initial database setup
+from sqlalchemy.orm import close_all_sessions
 
 ## FLASK SETUP ##
 app = Flask(__name__)
@@ -18,32 +18,39 @@ api = Api(app)
 ma = Marshmallow(app)
 
 def AddToDatabase(tweets):
+    counter = 0
     for tweet in tweets:
         exists = Tweet.query.filter_by(id=tweet['id']).first()
         if exists:
-            print('tweet already exists')
+            print(f"tweet {tweet['id']} already exists in database")
             continue
         else:
             tweet_to_add = Tweet(id=tweet['id'], datetime=tweet['datetime'], lang=tweet['lang'], user_id=tweet['user_id'], username=tweet['username'], tweet=tweet['tweet'], score=tweet['scores']['compound'])
             try:
                 db.session.add(tweet_to_add)
-                print('tweet added to db')
+                print(f"tweet {tweet_to_add} added to database")
+                counter+=1
             except Exception as e:
                 print(e)
                 continue
     db.session.commit()
-    print('tweets committed to db')
+    print(f'{counter} tweets committed to db')
 
 def QueryTweets():
     schema = TweetSchema()
     tw = []
     #for n in db.session.query(Tweet).filter_by(username='barackobama').order_by(Tweet.datetime):
-    for n in db.session.query(Tweet).filter(Tweet.score >= 0.5).order_by(Tweet.score):
+    for n in db.session.query(Tweet).filter(Tweet.score >= 0.5):
         t = schema.dump(n)
-        print(t)
         tw.append(t)
-    print(tw)
     return tw
+
+def init_db():
+    app.app_context().push() #This is only needed on initial setup.
+    with app.app_context():  #Builds database tables and connects app to db.
+        close_all_sessions() 
+        db.drop_all()         
+        db.create_all()      
 
 ## ROUTES ##
 #TODO: Landing page for data visualizer + GUI to interact with api directly. Currently handled by swagger auto generated docs. Docs need updating.
@@ -68,7 +75,6 @@ class AdvancedSearch(Resource):
         c = TwintConfig(username=username, search_term=search_term)
         res = PerformSearch(c)
         AddToDatabase(res)
-        QueryTweets()
         return jsonify(res)
 
 @api.route('/search/<search_term>')
@@ -82,10 +88,6 @@ class Search(Resource):
 ## APP ##
 if __name__ == "__main__":
     db.init_app(app)
-#    app.app_context().push() #This is only needed on initial setup.
-#    with app.app_context():  #Builds database tables and connects app to db.
-#        close_all_sessions() #Will need to uncomment the close_all_sessions import above.
-#        db.drop_all()        # 
-#        db.create_all()      # end of initial setup block. Comment all this out after first run.
+    #init_db() #only needed on initial startup
     app.run(debug=True, threaded=True)
     

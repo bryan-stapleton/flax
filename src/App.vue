@@ -99,17 +99,12 @@ export default {
       .catch(error => (console.log(error)))                        // catches errors in console
       .finally(() => { this.loading = false })                    // set loading to false to end loading animation
     },
-    advancedSearch: function(username, search_term) {           // same as above but also implements username; determined by search differentiator function above
+    advancedSearch: function(username, search_term) {           // same as above but also implements username
       this.loading = true
       axios.get("http://localhost:5000/advanced/"+username+"/"+search_term+"")
       .then(response => this.tweets = response.data)
       .catch(error => (console.log(error)))
       .finally(() => { this.loading = false })
-    },
-    retrieveStockData: function() {                                                       
-      axios.get("https://finnhub.io/api/v1/quote?symbol=AAPL&token=c7fcj52ad3if3fodts7g")  // currently not in use; placeholder 
-      .then(response => {console.log(response.data)
-      })
     },
     queryDatabase: function() {
       axios.get("http://localhost:5000/db/query/")
