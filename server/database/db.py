@@ -19,7 +19,7 @@ class Tweet(db.Model):
     username = db.Column(db.String(64))
     tweet = db.Column(db.String(280))
     lang = db.Column(db.String(64))
-    score = db.Column(db.Integer)
+    score = db.Column(db.Float)
     #id_str = db.Column(db.String(64))
     #conversation_id = db.Column(db.String(64))
     #datestamp = db.Column(db.String(64))
@@ -92,4 +92,6 @@ class TweetSchema(ma.SQLAlchemySchema):
     tweet = ma.auto_field()
     username = ma.auto_field()
     datetime = ma.auto_field()
+    score = ma.auto_field()
+    lang = ma.auto_field()
 

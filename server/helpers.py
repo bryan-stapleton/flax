@@ -48,7 +48,7 @@ def PerformSearch(config_obj, **kwargs):
         twint.run.Search(c)
         t = twint.output.tweets_list[:c.Limit]
         retry_counter += 1
-        print(retry_counter) #for debug
+        print(f"Application returning less than desired number of results; attempt {retry_counter} of 5") #for debug
         t = RemoveDuplicates(t)
     AnalyzeTweetSentiment(t)
     j = SerializeTweets(t)

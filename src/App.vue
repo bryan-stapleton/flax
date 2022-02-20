@@ -112,8 +112,9 @@ export default {
       })
     },
     queryDatabase: function() {
-      axios.get("https://localhost:5000/private/query")
-      .then(response => { console.log(response.data) })
+      axios.get("http://localhost:5000/db/query/")
+      .then(response => {console.log(response.data)})
+      .catch(error => {console.log(error)})
     }
   },
   watch: {

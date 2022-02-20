@@ -23,8 +23,8 @@
           <b-button variant="primary" size="sm" @click="onClick()">Sign In</b-button>
         </b-dropdown-form>
         <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item-button @click="emitDownload()">Download</b-dropdown-item-button>
-        <b-dropdown-item-button @click="emitSelected()">Selected</b-dropdown-item-button>
+        <b-dropdown-item-button @click="emitDownload()">Download All</b-dropdown-item-button>
+        <b-dropdown-item-button @click="emitSelected()">Download Selected</b-dropdown-item-button>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item-button>New around here? Sign up</b-dropdown-item-button>
         <b-dropdown-item-button>Forgot Password?</b-dropdown-item-button>
