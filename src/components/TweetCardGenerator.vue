@@ -87,7 +87,6 @@ export default {
   max-height: 160px;
   background-color: #0c0c0c;
   color: lightgray;
-  animation: created 2s ease-in;
 }
 .tweet-grid {
   margin: auto;

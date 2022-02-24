@@ -5,12 +5,14 @@ db = SQLAlchemy()
 ma = Marshmallow()
 
 #The attributes that are commented out can be added back in by uncommenting them below in the class definition and the init function. 
-#The attributes will need to be set in the AddToDatabase function as well. AddToDatabase can be found in db.py.
 #For the sake of simplicity I am not adding them to the database as of now as they're not useful to me. Feel free to add or remove attributes as desired.
+#If you do add any attributes, make sure to add them to TweetSchema at the end of this document as well if you would like them to be dumped during queries.
+#The attributes will need to be set in the AddToDatabase function as well. AddToDatabase can be found in app.py.
+
 
 #Several attributes, notably including 'mentions' and 'near', are not properly configured and will cause errors if simply uncommented. 
 #After investigation this appears to be because they are returning arrays and/or dictionaries instead of strings. 
-#Will need to either create another db model and a relationship, or dissect the dictionaries and add the keys as attributes.
+#Will need to either create another db model and a relationship or dissect the dictionaries and add the keys as attributes if you intend on using them.
 
 class Tweet(db.Model):
     id = db.Column(db.Integer, primary_key=True)

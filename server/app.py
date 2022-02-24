@@ -1,7 +1,5 @@
 #local imports
-from helpers import TwintConfig, PerformSearch
-from database.db import db, Tweet, TweetSchema
-
+from helpers import db, TwintConfig, PerformSearch, AddToDatabase, QueryTweets
 #external imports
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -11,43 +9,15 @@ from sqlalchemy.orm import close_all_sessions
 
 ## FLASK SETUP ##
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/bryan/Documents/flax/server/database/temp.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/tmp.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
 api = Api(app)
 ma = Marshmallow(app)
 
-def AddToDatabase(tweets):
-    counter = 0
-    for tweet in tweets:
-        exists = Tweet.query.filter_by(id=tweet['id']).first()
-        if exists:
-            print(f"tweet {tweet['id']} already exists in database")
-            continue
-        else:
-            tweet_to_add = Tweet(id=tweet['id'], datetime=tweet['datetime'], lang=tweet['lang'], user_id=tweet['user_id'], username=tweet['username'], tweet=tweet['tweet'], score=tweet['scores']['compound'])
-            try:
-                db.session.add(tweet_to_add)
-                print(f"tweet {tweet_to_add} added to database")
-                counter+=1
-            except Exception as e:
-                print(e)
-                continue
-    db.session.commit()
-    print(f'{counter} tweets committed to db')
-
-def QueryTweets():
-    schema = TweetSchema()
-    tw = []
-    #for n in db.session.query(Tweet).filter_by(username='barackobama').order_by(Tweet.datetime):
-    for n in db.session.query(Tweet).filter(Tweet.score >= 0.5):
-        t = schema.dump(n)
-        tw.append(t)
-    return tw
-
 def init_db():
-    app.app_context().push() #This is only needed on initial setup.
-    with app.app_context():  #Builds database tables and connects app to db.
+    app.app_context().push() # This is only needed on initial setup.
+    with app.app_context():  # Builds database tables and connects app to db.
         close_all_sessions() 
         db.drop_all()         
         db.create_all()      
@@ -60,10 +30,6 @@ def landing():
 
 @api.route('/db/query/')
 class DatabaseQuery(Resource):
-    #def post(self):
-    #    res = "placeholder"
-    #    return jsonify(res)
-    
     def get(self):
         res = QueryTweets()
         return jsonify(res) 

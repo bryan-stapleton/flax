@@ -15,22 +15,15 @@
         </b-button-toolbar>
       </div>
       <div class="tweet-wrapper">
-        <TweetCard :tweets="this.tweets" v-on:tweet-selected="updateSelected" />
+        <TweetCardGenerator :tweets="this.tweets" v-on:tweet-selected="updateSelected" />
       </div>
-      <!-- TODO: redo graphing section and related features. Place inside conditionally rendered modal; implement correlation & wordcloud -->
     </div>
-
-    <portal to="destination">
-        <div class='logo-wrapper'>
-          <img id='logo' alt="3 circles logo" src="./assets/logo.svg">
-        </div>
-    </portal>
   </div>
 </template>
 
 <script>
 import NavBar from './components/NavBar'
-import TweetCard from './components/TweetCard'
+import TweetCardGenerator from './components/TweetCardGenerator'
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -39,7 +32,7 @@ export default {
   name: 'App',
   components: {
     NavBar,
-    TweetCard
+    TweetCardGenerator
   },
   data() {
     return {
