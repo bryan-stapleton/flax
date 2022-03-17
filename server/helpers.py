@@ -32,7 +32,7 @@ def TwintConfig(**kwargs):
 def PerformSearch(config_obj, **kwargs):
     c = config_obj
     twint.run.Search(c)
-    dl = c.Limit * 2
+    dl = c.Limit * 3 / 2
     t = twint.output.tweets_list[:dl]
     retry_counter = 0
     retry_limit = 5
@@ -106,15 +106,15 @@ def QueryTweets():
     schema = TweetSchema()
     tw = []
     # example queries
-    #for n in db.session.query(Tweet).all():
-    for n in db.session.query(Tweet).filter_by(lang='en'):
+    for n in db.session.query(Tweet).all():
     # for n in db.session.query(Tweet).filter_by(username='barackobama').order_by(Tweet.datetime):
     # for n in db.session.query(Tweet).filter(Tweet.score >= 0.5):
+    # for n in db.session.query(Tweet).filter_by(lang='en'):       
         t = schema.dump(n)
         tw.append(t)
     return tw    
 
-# Honestly copied this off the internet somewhere. Tried fiddling with it, didn't go well. Just dont mess with it for now.
+
 # TODO: Find alternative regex expressions and test. This one seems to cause AnaylzeTweetSentiment to return some false 0s. Still notably fewer false 0s than with no regex filter.
 
 def RemoveURL(text):

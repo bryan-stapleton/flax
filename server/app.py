@@ -1,5 +1,6 @@
 #local imports
 from helpers import db, TwintConfig, PerformSearch, AddToDatabase, QueryTweets
+
 #external imports
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -54,6 +55,6 @@ class Search(Resource):
 ## APP ##
 if __name__ == "__main__":
     db.init_app(app)
-    #init_db() #only needed on initial startup
-    app.run(debug=True, threaded=True)
+    init_db() #only needed on initial startup
+    app.run()
     

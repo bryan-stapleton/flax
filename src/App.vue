@@ -100,7 +100,7 @@ export default {
       .finally(() => { this.loading = false })
     },
     queryDatabase: function() {
-      axios.get("http://localhost:5000/db/query/")
+      axios.get("http://localhost:5000/db/query/")     // WIP; needs to be set up on the back end to take in a query param. Should only be accessible by admin after authenticating.
       .then(response => {console.log(response.data)})
       .catch(error => {console.log(error)})
     }
@@ -119,7 +119,7 @@ export default {
       }
       else {
           logo.animate([{transform: 'rotate(360deg)'}],{
-            duration: 350,
+            duration: 500,
             iterations: 1
           })
           logo.classList.remove('logo-anim')
