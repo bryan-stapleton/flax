@@ -29,7 +29,6 @@ export default {
       console.log('emitting selected event')
       this.$emit('selected-event', event)
     }
-
   },
   props: {
     user: String,

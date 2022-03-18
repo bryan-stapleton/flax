@@ -1,0 +1,27 @@
+{
+  "name": "Flax-V",
+  "description": "Twitter scraper with NTLK sentiment analysis",
+  "repository": "https://github.com/gljusty/flax",
+  "logo": "https://vuejs.org/images/logo.png",
+  "keywords": ["flask", "vue", "heroku"],
+  "env": {
+    "FLASK_ENV": {
+      "description": "Flask Enviroment",
+      "value": "production"
+    },
+    "SECRET": {
+      "description": "Flask Secret Key",
+      "value": "my_secret_key"
+    }
+   },
+  "addons": [
+   ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ]
+}

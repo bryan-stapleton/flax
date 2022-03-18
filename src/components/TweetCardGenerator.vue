@@ -28,7 +28,6 @@
 
 <script>
 import Velocity from 'velocity-animate'
-
 export default {
     name: 'TweetCard',
     props: {
@@ -111,5 +110,4 @@ export default {
   text-decoration: none;
   color: grey;
 }
-
 </style>

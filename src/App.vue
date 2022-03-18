@@ -27,7 +27,6 @@ import TweetCardGenerator from './components/TweetCardGenerator'
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-
 export default {
   name: 'App',
   components: {
@@ -133,34 +132,28 @@ export default {
 body {
   background-color: #082b3f;
 }
-
 #app {
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 #logo {
   margin: auto;
   justify-self: center;
 }
-
 .inputfield {
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 0;
   max-width: 300px;
 }
-
 .logo-anim {
   animation: loading 5s infinite;
 }
-
 .selected {
   border: white solid 1px;
   box-shadow: whitesmoke 1px 1px;
 }
-
 .logo-wrapper {
   display: flex;
   place-content: center;
@@ -168,22 +161,18 @@ body {
   top: 0px;
   z-index: -1;
 }
-
 .navbar-wrapper {
   position: sticky;
   top: 0px;
 }
-
 .tweet-wrapper {
   margin-left: 10px;
   margin-top: 40px;
 }
-
 .ui-wrapper {
   display: flex;
   justify-content: center;
 }
-
 @keyframes loading {
   50% { transform: rotate(360deg); }
 }

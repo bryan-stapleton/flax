@@ -55,4 +55,3 @@ if __name__ == "__main__":
     db.init_app(app)
     init_db() #only needed on initial startup
     app.run(debug=True)
-    
