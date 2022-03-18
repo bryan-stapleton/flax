@@ -9,7 +9,7 @@ from flask_marshmallow import Marshmallow
 from sqlalchemy.orm import close_all_sessions
 
 ## FLASK SETUP ##
-app = Flask(__name__)
+app = Flask(__name__, static_folder='/dist', static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/tmp.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
@@ -25,9 +25,7 @@ def init_db():
 
 ## ROUTES ##
 #TODO: Landing page for data visualizer + GUI to interact with api directly. Currently handled by swagger auto generated docs. Docs need updating.
-@app.route('/')
-def landing():
-    return
+
 
 @api.route('/db/query/')
 class DatabaseQuery(Resource):
@@ -56,5 +54,5 @@ class Search(Resource):
 if __name__ == "__main__":
     db.init_app(app)
     init_db() #only needed on initial startup
-    app.run()
+    app.run(debug=True)
     

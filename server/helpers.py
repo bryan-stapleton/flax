@@ -32,7 +32,7 @@ def TwintConfig(**kwargs):
 def PerformSearch(config_obj, **kwargs):
     c = config_obj
     twint.run.Search(c)
-    dl = c.Limit * 3 / 2
+    dl = int(c.Limit * 3 / 2)
     t = twint.output.tweets_list[:dl]
     retry_counter = 0
     retry_limit = 5
