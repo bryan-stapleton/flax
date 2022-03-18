@@ -55,5 +55,10 @@ class Search(Resource):
 if __name__ == "__main__":
     init_db() #only needed on initial startup
     db.init_app(app)
+    app.run(debug=True, port=os.environ.get('PORT', 5000))
+
+else:
+    init_db() #only needed on initial startup
+    db.init_app(app)
     app.run(port=os.environ.get('PORT', 5000))
     
