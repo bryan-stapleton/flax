@@ -51,14 +51,10 @@ class Search(Resource):
         AddToDatabase(res)
         return jsonify(res)
 
-## APP ##
-if __name__ == "__main__":
-    init_db() #only needed on initial startup
-    db.init_app(app)
-    app.run(debug=True, port=os.environ.get('PORT', 5000))
 
-else:
-    init_db() #only needed on initial startup
-    db.init_app(app)
+## APP ##
+init_db() #only needed on initial startup
+db.init_app(app)
+if __name__ == "__main__":
     app.run(port=os.environ.get('PORT', 5000))
     
