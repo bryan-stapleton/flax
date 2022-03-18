@@ -83,8 +83,8 @@ a.remove() } }, searchDifferentiator: function(search) { this.selected = []; thi
 = []; let de = search.trim().split(','); if (de[0].startsWith('@')) { let u = de.shift().substring(1)
 this.advancedSearch(u, de) } else { this.simpleSearch(de) } }, simpleSearch: function(search_term)
 { this.loading = true; axios.get("http://localhost:5000/search/"+search_term+"") 
-.then(response => this.tweets = response.data) .catch(error => (console.log(error))) .finally(()
-=> { this.loading = false }) }, advancedSearch: function(username, search_term) {
+.then(response => this.tweets = response.data) .catch(error => (console.log(error))) 
+.finally(() => { this.loading = false }) }, advancedSearch: function(username, search_term) {
 this.loading = true; axios.get("http://localhost:5000/advanced/"+username+"/"+search_term+"")
 .then(response => this.tweets = response.data) .catch(error => (console.log(error)))
 .finally(() => { this.loading = false }) }, queryDatabase: function() { axios.get("http://localhost:5000/db/query/")
