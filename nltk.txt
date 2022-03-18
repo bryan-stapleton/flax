@@ -1,4 +1,4 @@
 punkt
 stopwords
 vader_lexicon
-tokenizer
+tokenize
