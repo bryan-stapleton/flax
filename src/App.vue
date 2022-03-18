@@ -74,7 +74,7 @@ export default { name: 'App', components: { NavBar, TweetCardGenerator }, data()
 { let t = this.selected.indexOf(value_from_child); this.selected[t].classList.remove('selected')
 this.selected.splice(t, 1) } else { this.selected.push(value_from_child) } }, downloadSelected:
 function() { let arr = []; for (let n in this.selected) { let c = document.getElementById(this.selected[n].id)
-if (!(arr.includes(c.id))) { arr.push(c.id) } } let filtered_tweets = this.tweets.filter(tweet
+if (!(arr.includes(c.id))) { arr.push(c.id) } }; let filtered_tweets = this.tweets.filter(tweet
 => arr.includes(JSON.stringify(tweet.id))); this.downloadtoFile(filtered_tweets) },
 downloadtoFile: function(content) { if (content) { let a = document.createElement('a')
 let b = new Blob([JSON.stringify(content, null, 4)], {type: 'application/json'})
