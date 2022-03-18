@@ -87,20 +87,20 @@ export default {
     },
     simpleSearch: function(search_term) {                              
       this.loading = true                                             // sets loading to true so that watch function will apply loading animation to logo
-      axios.get("http://localhost:5000/search/"+search_term+"")      // performs get request with user input search term
+      axios.get("https://flax-app.herokuapp.com/search/"+search_term+"")      // performs get request with user input search term
       .then(response => this.tweets = response.data)                // response converted to this.tweets which is passed to TweetCard to generate the cards that display each tweet
       .catch(error => (console.log(error)))                        // catches errors in console
       .finally(() => { this.loading = false })                    // set loading to false to end loading animation
     },
     advancedSearch: function(username, search_term) {           // same as above but also implements username
       this.loading = true
-      axios.get("http://localhost:5000/advanced/"+username+"/"+search_term+"")
+      axios.get("https://flax-app.herokuapp.com/advanced/"+username+"/"+search_term+"")
       .then(response => this.tweets = response.data)
       .catch(error => (console.log(error)))
       .finally(() => { this.loading = false })
     },
     queryDatabase: function() {
-      axios.get("http://localhost:5000/db/query/")     // WIP; needs to be set up on the back end to take in a query param. Should only be accessible by admin after authenticating.
+      axios.get("https://flax-app.herokuapp.com/db/query")     // WIP; needs to be set up on the back end to take in a query param. Should only be accessible by admin after authenticating.
       .then(response => {console.log(response.data)})
       .catch(error => {console.log(error)})
     }
