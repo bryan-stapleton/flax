@@ -74,18 +74,18 @@ export default { name: 'App', components: { NavBar, TweetCardGenerator }, data()
 { let t = this.selected.indexOf(value_from_child); this.selected[t].classList.remove('selected')
 this.selected.splice(t, 1) } else { this.selected.push(value_from_child) } }, downloadSelected:
 function() { let arr = []; for (let n in this.selected) { let c = document.getElementById(this.selected[n].id)
-if (!(arr.includes(c.id))) { arr.push(c.id) } }; let filtered_tweets = this.tweets.filter(tweet =>
-arr.includes(JSON.stringify(tweet.id))); this.downloadtoFile(filtered_tweets) },
-downloadtoFile: function(content) { if (content) { let a = document.createElement('a')
+if (!(arr.includes(c.id))) { arr.push(c.id) } }; let filtered_tweets = this.tweets.filter(tweet
+=> arr.includes(JSON.stringify(tweet.id))); this.downloadtoFile(filtered_tweets)
+}, downloadtoFile: function(content) { if (content) { let a = document.createElement('a')
 let b = new Blob([JSON.stringify(content, null, 4)], {type: 'application/json'})
 let u = URL.createObjectURL(b); a.href = u; a.download = 'data' || 'download'; a.click()
 a.remove() } }, searchDifferentiator: function(search) { this.selected = []; this.tweets
 = []; let de = search.trim().split(','); if (de[0].startsWith('@')) { let u = de.shift().substring(1)
 this.advancedSearch(u, de) } else { this.simpleSearch(de) } }, simpleSearch: function(search_term)
-{ this.loading = true; axios.get("http://localhost:5000/search/"+search_term+"") 
-.then(response => this.tweets = response.data) .catch(error => (console.log(error))) 
-.finally(() => { this.loading = false }) }, advancedSearch: function(username, search_term) {
-this.loading = true; axios.get("http://localhost:5000/advanced/"+username+"/"+search_term+"")
+{ this.loading = true; axios.get("http://localhost:5000/search/"+search_term+"")
+.then(response => this.tweets = response.data) .catch(error => (console.log(error)))
+.finally(() => { this.loading = false }) }, advancedSearch: function(username, search_term)
+{ this.loading = true; axios.get("http://localhost:5000/advanced/"+username+"/"+search_term+"")
 .then(response => this.tweets = response.data) .catch(error => (console.log(error)))
 .finally(() => { this.loading = false }) }, queryDatabase: function() { axios.get("http://localhost:5000/db/query/")
 .then(response => {console.log(response.data)}) .catch(error => {console.log(error)})
