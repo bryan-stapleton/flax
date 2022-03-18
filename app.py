@@ -2,7 +2,7 @@
 from helpers import db, TwintConfig, PerformSearch, AddToDatabase, QueryTweets
 
 #external imports
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_restx import Api, Resource
 from flask_marshmallow import Marshmallow
@@ -10,7 +10,7 @@ from sqlalchemy.orm import close_all_sessions
 import os
 
 ## FLASK SETUP ##
-app = Flask(__name__, static_folder='/dist', static_url_path='/')
+app = Flask(__name__, static_folder='dist', static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/tmp.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
@@ -27,7 +27,9 @@ def init_db():
 
 ## ROUTES ##
 #TODO: Landing page for data visualizer + GUI to interact with api directly. Currently handled by swagger auto generated docs. Docs need updating.
-
+@app.route('/app')
+def get(self):
+    return send_from_directory('dist', 'index.html')
 
 @api.route('/db/query/')
 class DatabaseQuery(Resource):
