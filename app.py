@@ -27,9 +27,10 @@ def init_db():
 
 ## ROUTES ##
 #TODO: Landing page for data visualizer + GUI to interact with api directly. Currently handled by swagger auto generated docs. Docs need updating.
-@app.route('/app')
-def get(self):
-    return send_from_directory('dist', 'index.html')
+@api.route('/app')
+class LandingPage(Resource):
+    def get(self):
+        return send_from_directory('dist', 'index.html')
 
 @api.route('/db/query/')
 class DatabaseQuery(Resource):
