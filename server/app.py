@@ -7,6 +7,7 @@ from flask_cors import CORS
 from flask_restx import Api, Resource
 from flask_marshmallow import Marshmallow
 from sqlalchemy.orm import close_all_sessions
+import os
 
 ## FLASK SETUP ##
 app = Flask(__name__, static_folder='/dist', static_url_path='/')
@@ -54,5 +55,5 @@ class Search(Resource):
 if __name__ == "__main__":
     db.init_app(app)
     init_db() #only needed on initial startup
-    app.run(debug=True)
+    app.run(port=os.environ.get('PORT', 5000))
     
