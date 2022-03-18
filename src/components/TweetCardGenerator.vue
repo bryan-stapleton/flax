@@ -33,11 +33,11 @@
         <a class="score-wrapper">
 
           <b-badge variant="success" v-if="tweet.scores['compound'] > 0">
-            {{tweet.scores['compound']}}
+             {{tweet.scores['compound']}}
           </b-badge>
 
           <b-badge variant="danger" v-else-if="tweet.scores['compound'] < 0">
-            {{tweet.scores['compound']}}
+             {{tweet.scores['compound']}}
           </b-badge>
 
           <b-badge variant="" v-else>{{tweet.scores['compound']}}</b-badge>
@@ -112,3 +112,4 @@ el, { opacity: 0 }, { complete: done } ) }, delay) } }, computed: {}, data() { r
   color: grey;
 }
 </style>
+

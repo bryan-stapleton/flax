@@ -7,7 +7,7 @@
       href="https://github.com/gljusty/flax"
       target="_blank"
     >
-      _Flax
+       _Flax
     </b-navbar-brand>
 
     <div id="dropdown-wrapper">
@@ -23,11 +23,11 @@
         <b-dropdown-divider></b-dropdown-divider>
 
         <b-dropdown-item-button @click="emitDownload()">
-          Download All
+           Download All
         </b-dropdown-item-button>
 
         <b-dropdown-item-button @click="emitSelected()">
-          Download Selected
+           Download Selected
         </b-dropdown-item-button>
 
         <b-dropdown-divider></b-dropdown-divider>
@@ -42,9 +42,10 @@
 
 <script>
  export default { name: 'NavBar', components: {}, methods: { onClick: function()
-{ console.log('clicked') }, emitDownload: function(event) { this.$emit('download-event', event) }, emitSelected: function(event)
-{ console.log('emitting selected event'); this.$emit('selected-event', event) } },
-props: { user: String, tweets: Array }, data () { return {} } }
+{ console.log('clicked') }, emitDownload: function(event) { this.$emit('download-event',
+event) }, emitSelected: function(event) { console.log('emitting selected event');
+this.$emit('selected-event', event) } }, props: { user: String, tweets: Array },
+data () { return {} } }
 </script>
 
 <style scoped>
@@ -65,3 +66,4 @@ props: { user: String, tweets: Array }, data () { return {} } }
   background-color: #082b3f;
 }
 </style>
+
