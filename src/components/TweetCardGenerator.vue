@@ -53,7 +53,7 @@ export default {
         }, delay)
       },
       leave: function (el, done) {
-        let delay = Math.random() ** 3 * 300
+        let delay = Math.random() ** 3 * 750
         setTimeout(function () {
           Velocity(
             el,
