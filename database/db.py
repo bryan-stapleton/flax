@@ -15,7 +15,7 @@ ma = Marshmallow()
 #Will need to either create another db model and a relationship or dissect the dictionaries and add the keys as attributes if you intend on using them.
 
 class Tweet(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True)
     datetime = db.Column(db.String(64))
     user_id = db.Column(db.String(64))
     username = db.Column(db.String(64))
