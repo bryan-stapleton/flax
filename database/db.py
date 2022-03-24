@@ -19,7 +19,7 @@ class Tweet(db.Model):
     datetime = db.Column(db.String(64))
     user_id = db.Column(db.String(64))
     username = db.Column(db.String(64))
-    tweet = db.Column(db.String(280))
+    tweet = db.Column(db.String(320))
     lang = db.Column(db.String(64))
     score = db.Column(db.Float)
     #id_str = db.Column(db.String(64))
