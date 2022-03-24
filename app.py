@@ -11,7 +11,12 @@ import os
 
 ## FLASK SETUP ##
 app = Flask(__name__, static_folder='dist', static_url_path='/')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///database/tmp.db')
+
+uri = os.getenv("DATABASE_URL",  'sqlite:///database/tmp.db')  #fixes heroku postgres dialect bug
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
 api = Api(app)
