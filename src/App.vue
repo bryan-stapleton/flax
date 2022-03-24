@@ -130,6 +130,9 @@ export default {
 </script>
 
 <style>
+::-webkit-scrollbar {
+  display: none;
+}
 body {
   background-color: #082b3f;
 }

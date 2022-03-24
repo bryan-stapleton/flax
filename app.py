@@ -11,7 +11,7 @@ import os
 
 ## FLASK SETUP ##
 app = Flask(__name__, static_folder='dist', static_url_path='/')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/tmp.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///database/tmp.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
 api = Api(app)
