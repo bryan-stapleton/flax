@@ -6,7 +6,7 @@ from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_restx import Api, Resource
 from flask_marshmallow import Marshmallow
-from sqlalchemy.orm import close_all_sessions
+from sqlalchemy.orm import Session, close_all_sessions
 import os
 
 ## FLASK SETUP ##
@@ -26,6 +26,7 @@ def init_db():
     app.app_context().push() # This is only needed on initial setup.
     with app.app_context():  # Builds database tables and connects app to db.
         db.init_app(app)
+        Session.rollback()
         close_all_sessions() 
         db.drop_all()         
         db.create_all()      
