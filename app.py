@@ -62,8 +62,9 @@ class Search(Resource):
 
 
 ## APP ##
-Session.rollback() #hack workaround for heroku db issue
+
 init_db() #only needed on initial startup
+
 if __name__ == "__main__":
     app.run(port=os.environ.get('PORT', 5000))
     

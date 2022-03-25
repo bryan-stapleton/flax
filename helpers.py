@@ -97,7 +97,11 @@ def AddToDatabase(tweets):
             except Exception as e:
                 print(e)
                 continue
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        db.session.rollback()
     print(f'{_counter} tweets committed to db')
 
 
