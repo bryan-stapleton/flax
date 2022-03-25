@@ -6,7 +6,7 @@ from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_restx import Api, Resource
 from flask_marshmallow import Marshmallow
-from sqlalchemy.orm import Session, close_all_sessions
+from sqlalchemy.orm import close_all_sessions
 import os
 
 ## FLASK SETUP ##
