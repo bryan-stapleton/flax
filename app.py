@@ -26,7 +26,6 @@ def init_db():
     app.app_context().push() # This is only needed on initial setup.
     with app.app_context():  # Builds database tables and connects app to db.
         db.init_app(app)
-        Session.rollback()
         close_all_sessions() 
         db.drop_all()         
         db.create_all()      
@@ -63,6 +62,7 @@ class Search(Resource):
 
 
 ## APP ##
+Session.rollback() #hack workaround for heroku db issue
 init_db() #only needed on initial startup
 if __name__ == "__main__":
     app.run(port=os.environ.get('PORT', 5000))
