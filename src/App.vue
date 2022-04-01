@@ -2,131 +2,171 @@
   <div id="app">
     <div class="app-wrapper">
       <div class="navbar-wrapper">
-        <NavBar :tweets="this.tweets" v-on:download-event="downloadtoFile(tweets)" v-on:selected-event="downloadSelected()" />
+        <NavBar
+          :tweets="this.tweets"
+          v-on:download-event="downloadtoFile(tweets)"
+          v-on:selected-event="downloadSelected()"
+        />
       </div>
-      <div class='logo-wrapper'>
-        <img id='logo' alt="3 circles logo" src="./assets/logo.svg">
+      <div class="logo-wrapper">
+        <img id="logo" alt="3 circles logo" src="./assets/logo.svg" />
       </div>
-      <div class='ui-wrapper'>
-        <b-form-input class="m-0 inputfield" v-model.lazy="search_term" placeholder="ex: @BarackObama"></b-form-input>
+      <div class="ui-wrapper">
+        <b-form-input
+          class="m-0 inputfield"
+          v-model.lazy="search_term"
+          placeholder="ex: @BarackObama"
+        ></b-form-input>
         <b-button-toolbar size="sm">
-          <b-button class="ml-1 sm-0 search-button" variant="info" @click="searchDifferentiator(search_term)"> Search </b-button>
+          <b-button
+            class="ml-1 sm-0 search-button"
+            variant="info"
+            @click="searchDifferentiator(search_term)"
+          >
+            Search
+          </b-button>
           <!-- <b-button class="ml-1 sm-0 button" variant="primary" @click="queryDatabase()"> Query DB </b-button> -->
         </b-button-toolbar>
       </div>
       <div class="tweet-wrapper">
-        <TweetCardGenerator :tweets="this.tweets" v-on:tweet-selected="updateSelected" />
+        <TweetCardGenerator
+          :tweets="this.tweets"
+          v-on:tweet-selected="updateSelected"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import NavBar from './components/NavBar'
-import TweetCardGenerator from './components/TweetCardGenerator'
-import axios from 'axios';
+import NavBar from "./components/NavBar";
+import TweetCardGenerator from "./components/TweetCardGenerator";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     NavBar,
-    TweetCardGenerator
+    TweetCardGenerator,
   },
   data() {
     return {
-      search_term: '',
+      search_term: "",
       selected: [],
       tweets: [],
-      loading: false
-    }
+      loading: false,
+    };
   },
   computed: {},
   methods: {
-    updateSelected (value_from_child) {
+    updateSelected(value_from_child) {
       if (this.selected.includes(value_from_child)) {
-        let t = this.selected.indexOf(value_from_child)
-        this.selected[t].classList.remove('selected')
-        this.selected.splice(t, 1)
-      }
-      else {
-        this.selected.push(value_from_child)
+        let t = this.selected.indexOf(value_from_child);
+        this.selected[t].classList.remove("selected");
+        this.selected.splice(t, 1);
+      } else {
+        this.selected.push(value_from_child);
       }
     },
     downloadSelected: function() {
-      let arr = []
+      let arr = [];
       for (let n in this.selected) {
-        let c = document.getElementById(this.selected[n].id)
-        if (!(arr.includes(c.id))) { arr.push(c.id) }
+        let c = document.getElementById(this.selected[n].id);
+        if (!arr.includes(c.id)) {
+          arr.push(c.id);
+        }
       }
-      let filtered_tweets = this.tweets.filter(tweet => arr.includes(JSON.stringify(tweet.id)))
-      this.downloadtoFile(filtered_tweets)
+      let filtered_tweets = this.tweets.filter((tweet) =>
+        arr.includes(JSON.stringify(tweet.id))
+      );
+      this.downloadtoFile(filtered_tweets);
     },
     downloadtoFile: function(content) {
       if (content) {
-        let a = document.createElement('a')
-        let b = new Blob([JSON.stringify(content, null, 4)], {type: 'application/json'})
-        let u = URL.createObjectURL(b)            
-        a.href = u                                  // attaches url to the href of the element that we created
-        a.download = 'data' || 'download';         // defines download behavior
-        a.click()                                 // virtually clicks on the element to initiate downlaod
-        a.remove()                               // deletes element as soon as we're done
+        let a = document.createElement("a");
+        let b = new Blob([JSON.stringify(content, null, 4)], {
+          type: "application/json",
+        });
+        let u = URL.createObjectURL(b);
+        a.href = u; // attaches url to the href of the element that we created
+        a.download = "data" || "download"; // defines download behavior
+        a.click(); // virtually clicks on the element to initiate downlaod
+        a.remove(); // deletes element as soon as we're done
       }
     },
     searchDifferentiator: function(search) {
-      this.selected = []                       // sets selected to empty array to avoid trying to download no longer existant tweets
-      this.tweets = []                        // sets tweets to empty array to clear old results
-      let de = search.trim().split(',')                      
-      if (de[0].startsWith('@')) {          // Differentiates between a username (starts with @) and a generic search term. 
-        let u = de.shift().substring(1)    // Username searches are considered advanced searches. Advanced searches can also contain search terms but should start with the username.
-        this.advancedSearch(u, de)        // Simple searches can contain one or more search terms.
+      this.selected = []; // sets selected to empty array to avoid trying to download no longer existant tweets
+      this.tweets = []; // sets tweets to empty array to clear old results
+      let de = search.trim().split(",");
+      if (de[0].startsWith("@")) {
+        // Differentiates between a username (starts with @) and a generic search term.
+        let u = de.shift().substring(1); // Username searches are considered advanced searches. Advanced searches can also contain search terms but should start with the username.
+        this.advancedSearch(u, de); // Simple searches can contain one or more search terms.
       } else {
-        this.simpleSearch(de)
+        this.simpleSearch(de);
       }
     },
-    simpleSearch: function(search_term) {                              
-      this.loading = true                                             // sets loading to true so that watch function will apply loading animation to logo
-      axios.get("https://flax-app.herokuapp.com/search/"+search_term+"")      // performs get request with user input search term
-      .then(response => this.tweets = response.data)                // response converted to this.tweets which is passed to TweetCard to generate the cards that display each tweet
-      .catch(error => (console.log(error)))                        // catches errors in console
-      .finally(() => { this.loading = false })                    // set loading to false to end loading animation
+    simpleSearch: function(search_term) {
+      this.loading = true; // sets loading to true so that watch function will apply loading animation to logo
+      axios
+        .get("https://flax-app.herokuapp.com/search/" + search_term + "") // performs get request with user input search term
+        .then((response) => (this.tweets = response.data)) // response converted to this.tweets which is passed to TweetCard to generate the cards that display each tweet
+        .catch((error) => console.log(error)) // catches errors in console
+        .finally(() => {
+          this.loading = false;
+        }); // set loading to false to end loading animation
     },
-    advancedSearch: function(username, search_term) {           // same as above but also implements username
-      this.loading = true
-      axios.get("https://flax-app.herokuapp.com/advanced/"+username+"/"+search_term+"")
-      .then(response => this.tweets = response.data)
-      .catch(error => (console.log(error)))
-      .finally(() => { this.loading = false })
+    advancedSearch: function(username, search_term) {
+      // same as above but also implements username
+      this.loading = true;
+      axios
+        .get(
+          "https://flax-app.herokuapp.com/advanced/" +
+            username +
+            "/" +
+            search_term +
+            ""
+        )
+        .then((response) => (this.tweets = response.data))
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.loading = false;
+        });
     },
     queryDatabase: function() {
-      axios.get("https://flax-app.herokuapp.com/db/query")     // WIP; needs to be set up on the back end to take in a query param. Should only be accessible by admin after authenticating.
-      .then(response => {console.log(response.data)})
-      .catch(error => {console.log(error)})
-    }
+      axios
+        .get("https://flax-app.herokuapp.com/db/query") // WIP; needs to be set up on the back end to take in a query param. Should only be accessible by admin after authenticating.
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   watch: {
     selected: function() {
-        for (let n in this.selected) {
-          let c = document.getElementById(this.selected[n].id)
-          c.classList.add('selected');
-        }
-      },
+      for (let n in this.selected) {
+        let c = document.getElementById(this.selected[n].id);
+        c.classList.add("selected");
+      }
+    },
     loading: function() {
-      let logo = document.getElementById('logo')
+      let logo = document.getElementById("logo");
       if (this.loading == true) {
-        logo.classList.add('logo-anim')
+        logo.classList.add("logo-anim");
+      } else {
+        logo.animate([{ transform: "rotate(360deg)" }], {
+          duration: 500,
+          iterations: 1,
+        });
+        logo.classList.remove("logo-anim");
       }
-      else {
-          logo.animate([{transform: 'rotate(360deg)'}],{
-            duration: 500,
-            iterations: 1
-          })
-          logo.classList.remove('logo-anim')
-        }
-      }
-    }
-  }
+    },
+  },
+};
 </script>
 
 <style>
@@ -188,6 +228,8 @@ body {
 }
 
 @keyframes loading {
-  50% { transform: rotate(360deg); }
+  50% {
+    transform: rotate(360deg);
+  }
 }
 </style>
