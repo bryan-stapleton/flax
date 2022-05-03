@@ -137,8 +137,7 @@ def QueryTweets():
     return tw
 
 
-# TODO: Find alternative regex expressions and test. This one seems to cause AnaylzeTweetSentiment to return some false 0s. Still notably fewer false 0s than with no regex filter.
-
+# TODO: Test alternative regex expressions.
 
 def RemoveURL(text):
     # dont change this nonsense
